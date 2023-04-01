@@ -71,6 +71,8 @@ static char *licensefiles[] = { "HEAD:LICENSE", "HEAD:LICENSE.md", "HEAD:COPYING
 static char *license;
 static char *readmefiles[] = { "HEAD:README", "HEAD:README.md" };
 static char *readme;
+static char *changelogfiles[] = { "HEAD:CHANGELOG", "HEAD:CHANGELOG.md", "HEAD:NEWS", "HEAD:NEWS.md" };
+static char *changelog;
 static long long nlogcommits = -1; /* -1 indicates not used */
 
 /* cache */
@@ -547,6 +549,9 @@ writeheader(FILE *fp, const char *title)
 	if (license)
 		fprintf(fp, " | <a href=\"%sfile/%s.html\">LICENSE</a>",
 		        relpath, license);
+	if (changelog)
+		fprintf(fp, " | <a href=\"%sfile/%s.html\">CHANGELOG</a>",
+		        relpath, changelog);
 	fputs("</td></tr></table>\n<hr/>\n<div id=\"content\">\n", fp);
 }
 
@@ -1319,6 +1324,14 @@ main(int argc, char *argv[])
 		if (!git_revparse_single(&obj, repo, readmefiles[i]) &&
 		    git_object_type(obj) == GIT_OBJ_BLOB)
 			readme = readmefiles[i] + strlen("HEAD:");
+		git_object_free(obj);
+	}
+
+	/* check CHANGELOG */
+	for (i = 0; i < sizeof(changelogfiles) / sizeof(*changelogfiles) && !changelog; i++) {
+		if (!git_revparse_single(&obj, repo, changelogfiles[i]) &&
+		    git_object_type(obj) == GIT_OBJ_BLOB)
+			changelog = changelogfiles[i] + strlen("HEAD:");
 		git_object_free(obj);
 	}
 
