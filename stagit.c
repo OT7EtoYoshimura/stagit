@@ -71,7 +71,11 @@ static char *licensefiles[] = { "HEAD:LICENSE", "HEAD:LICENSE.md", "HEAD:COPYING
 static char *license;
 static char *readmefiles[] = { "HEAD:README", "HEAD:README.md" };
 static char *readme;
-static char *changelogfiles[] = { "HEAD:CHANGELOG", "HEAD:CHANGELOG.md", "HEAD:NEWS", "HEAD:NEWS.md" };
+static char *changelogfiles[] = {
+	"HEAD:CHANGELOG", "HEAD:CHANGELOG.md",
+	"HEAD:NEWS", "HEAD:NEWS.md", "HEAD:CHANGES", "HEAD:CHANGES.md",
+	"HEAD:HISTORY", "HEAD:HISTORY.md", "HEAD:RELEASED", "HEAD:RELEASES.md"
+};
 static char *changelog;
 static long long nlogcommits = -1; /* -1 indicates not used */
 
