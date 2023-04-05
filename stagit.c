@@ -77,6 +77,11 @@ static char *changelogfiles[] = {
 	"HEAD:HISTORY", "HEAD:HISTORY.md", "HEAD:RELEASED", "HEAD:RELEASES.md"
 };
 static char *changelog;
+static char *contributingfiles[] = {
+	"HEAD:CONTRIBUTING", "HEAD:CONTRIBUTING.md",
+	"HEAD:CODE_OF_CONDUCT", "HEAD:CODE_OF_CONDUCT.md"
+};
+static char *contributing;
 static long long nlogcommits = -1; /* -1 indicates not used */
 
 /* cache */
@@ -556,6 +561,9 @@ writeheader(FILE *fp, const char *title)
 	if (changelog)
 		fprintf(fp, " | <a href=\"%sfile/%s.html\">CHANGELOG</a>",
 		        relpath, changelog);
+	if (contributing)
+		fprintf(fp, " | <a href=\"%sfile/%s.html\">CONTRIBUTING</a>",
+		        relpath, contributing);
 	fputs("</td></tr></table>\n<hr/>\n<div id=\"content\">\n", fp);
 }
 
@@ -1336,6 +1344,14 @@ main(int argc, char *argv[])
 		if (!git_revparse_single(&obj, repo, changelogfiles[i]) &&
 		    git_object_type(obj) == GIT_OBJ_BLOB)
 			changelog = changelogfiles[i] + strlen("HEAD:");
+		git_object_free(obj);
+	}
+
+	/* check CONTRIBUTING */
+	for (i = 0; i < sizeof(contributingfiles) / sizeof(*contributingfiles) && !contributing; i++) {
+		if (!git_revparse_single(&obj, repo, contributingfiles[i]) &&
+		    git_object_type(obj) == GIT_OBJ_BLOB)
+			contributing = contributingfiles[i] + strlen("HEAD:");
 		git_object_free(obj);
 	}
 

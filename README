@@ -148,7 +148,8 @@ Features
 - Log and diffstat per commit.
 - Show file tree with linkable line numbers.
 - Show references: local branches and tags.
-- Detect README, LICENSE and CHANGELOG file from HEAD and link it as a webpage.
+- Detect README, LICENSE, CHANGELOG or CONTRIBUTING file from HEAD and link it
+  as a webpage.
 - Detect submodules (.gitmodules file) from HEAD and link it as a webpage.
 - Atom feed of the commit log (atom.xml).
 - Atom feed of the tags/refs (tags.xml).
